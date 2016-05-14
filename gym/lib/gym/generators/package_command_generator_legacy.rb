@@ -11,7 +11,7 @@ module Gym
   class PackageCommandGeneratorLegacy
     class << self
       def generate
-        parts = ["/usr/bin/xcrun #{XcodebuildFixes.patch_package_application} -v"]
+        parts = ["/usr/bin/xcrun #{XcodebuildFixes.patch_package_application.shellescape} -v"]
         parts += options
         parts += pipe
 
@@ -30,7 +30,7 @@ module Gym
         end
 
         if Gym.config[:codesigning_identity]
-          options << "--sign '#{Gym.config[:codesigning_identity]}'"
+          options << "--sign #{Gym.config[:codesigning_identity].shellescape}"
         end
 
         options

@@ -38,6 +38,8 @@ match
 
 A new approach to iOS code signing: Share one code signing identity across your development team to simplify your codesigning setup and prevent code signing issues.
 
+`match` is the implementation of the https://codesigning.guide concept. `match` creates all required certificates & provisioning profiles and stores them in a separate git repository. Every team member with access to the repo can use those credentials for code signing. `match` also automatically repairs broken and expired credentials. It's the easiest way to share signing credentials across teams"
+
 -------
 <p align="center">
     <a href="#why-match">Why?</a> &bull;
@@ -128,9 +130,14 @@ app_identifier "tools.fastlane.app"
 username "user@fastlane.tools"
 ```
 
-#### Important: Use one git repo per team
+#### Important: Use one git branch per team
 
-`match` was designed to have one git repository per Apple account. If you work in multiple teams, please create one repo for each of them. More information on [codesigning.guide](https://codesigning.guide)
+`match` also supports storing certificates of multiple teams in one repo, by using separate git branches. If you work in multiple teams, make sure to set the `git_branch` parameter to a unique value per team. From there, `match` will automatically create and use the specified branch for you. 
+
+```ruby
+match(git_branch: "team1", username: "user@team1.com")
+match(git_branch: "team2", username: "user@team2.com")
+```
 
 ### Run
 
